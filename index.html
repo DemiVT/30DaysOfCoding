@@ -158,20 +158,18 @@
             display: flex;
             justify-content: center;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
         .search_box input {
-            width: 70%;
+            width: 100%;
+            max-width: 400px;
             padding: 1rem;
             border-radius: 20px;
             border: 1px solid var(--border-color);
             font-size: 1.2rem;
             outline: none;
             transition: border-color var(--transition);
-        }
-
-        .search_box input:focus {
-            border-color: var(--primary-color);
         }
 
         .search_box button {
@@ -185,10 +183,6 @@
             cursor: pointer;
             font-size: 1.6rem;
             transition: background var(--transition);
-        }
-
-        .search_box button:hover {
-            background: #2980b9;
         }
 
         #show {
@@ -230,6 +224,68 @@
             margin: 0 0.5rem; 
             vertical-align: middle;
         }
+
+        @media screen and (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .navbar .nav-links {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 1rem;
+            }
+
+            .navbar .nav-links a {
+                margin: 0.5rem 0;
+                font-size: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .section p {
+                font-size: 1rem;
+            }
+
+            .search_box button {
+                margin-top: 1rem;
+                margin-left: 0;
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .search_box input {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            .container {
+                width: 90%;
+                padding: 1rem;
+            }
+
+            #show {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .footer {
+                padding: 0.5rem;
+            }
+
+            .social-icons img {
+                width: 20px;
+                height: 20px;
+            }
+        }
     </style>
 </head>
 
@@ -261,70 +317,27 @@
         <h2>About Us</h2>
         <img src="Task 2/About Us.png" alt="About Us Image"> 
         <p>
-            Welcome to our Weather App! Our mission is to provide you with reliable and up-to-date weather information to make your life easier. With our user-friendly interface, you can get the latest weather updates quickly and accurately. We utilize advanced weather data sources to ensure you receive the best possible information. Whether you're planning a trip or just need to check the daily forecast, our app is here to assist you.</p>
-        <p>Our team is dedicated to creating a seamless experience for users by integrating real-time weather data, interactive features, and a clean, intuitive design. We believe that staying informed about the weather should be simple and straightforward.</p>
+            Welcome to our Weather App! Our mission is to provide you with reliable and up-to-date weather information to make your life easier. With our user-friendly interface, you can get the latest weather updates quickly and accurately. We utilize advanced weather data sources to ensure you receive the best possible information. Whether you're planning a trip or just need to check the daily forecast, our app is here to help. Stay prepared and enjoy peace of mind with our comprehensive weather services.
+        </p>
     </section>
 
     <section class="section" id="contact">
         <h2>Contact Us</h2>
-        <img src="Task 2/contact us.avif" alt="Contact Us Image"> 
-        <p>We value your feedback and are here to assist you with any questions or issues you may have. Reach out to us through the following methods:</p>
-        <p>Email: <a href="mailto:support@weatherapp.com">support@weatherapp.com</a></p>
-        <p>Phone: <a href="tel:1234567890">1234567890</a></p>
-        <p>For further inquiries, you can connect with us on our social media channels:</p>
-        <p class="social-icons">
-            <a href="https://twitter.com/weatherapp" target="_blank"><img src="Task 2/twitter.webp" alt="Twitter"></a> 
-            <a href="https://facebook.com/weatherapp" target="_blank"><img src="Task 2/facebook.webp" alt="Facebook"></a> 
-            <a href="https://instagram.com/weatherapp" target="_blank"><img src="Task 2/insta.jpg" alt="Instagram"></a> 
-        </p>
+        <img src="Task 2/Contact Us.png" alt="Contact Us Image">
+        <p>If you have any questions, feel free to reach out to us. We'd love to hear from you!</p>
+        <div class="social-icons">
+            <a href="#"><img src="Task 2/facebook.png" alt="Facebook"></a> 
+            <a href="#"><img src="Task 2/twitter.png" alt="Twitter"></a> 
+            <a href="#"><img src="Task 2/linkedin.png" alt="LinkedIn"></a> 
+            <a href="#"><img src="Task 2/github.png" alt="GitHub"></a> 
+        </div>
     </section>
 
     <footer class="footer">
-        <p>&copy; By Viraj Tupe Weather App 2024 . All rights reserved.</p>
+        <p>&copy; 2024 Weather App. All rights reserved.</p>
     </footer>
 
-    <script>
-        document.getElementById('search').addEventListener('click', function() {
-            const city = document.getElementById('city').value;
-            const apiKey = 'a3f3dda8f2e664204b1fecbeba0f3d7d'; 
-            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-        
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.cod === 200) {
-                        const weather = data.weather[0].description;
-                        const temp = data.main.temp;
-                        const humidity = data.main.humidity;
-                        const windSpeed = data.wind.speed;
-                        const visibility = data.visibility / 1000; // Convert visibility to kilometers
-                        const icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
-        
-                        document.getElementById('show').innerHTML = `
-                            <h3>Weather in ${city}</h3>
-                            <img src="${icon}" alt="${weather}">
-                            <p><span class="weather-attribute">Description:</span> ${weather}</p>
-                            <p><span class="weather-attribute">Temperature:</span> ${temp}°C</p>
-                            <p><span class="weather-attribute">Humidity:</span> ${humidity}%</p>
-                            <p><span class="weather-attribute">Wind Speed:</span> ${windSpeed} m/s</p>
-                            <p><span class="weather-attribute">Visibility:</span> ${visibility} km</p>
-                        `;
-                    } else {
-                        document.getElementById('show').innerHTML = `<p>City not found.</p>`;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('show').innerHTML = `<p>Something went wrong.</p>`;
-                });
-        });
-
-        document.getElementById('city').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                document.getElementById('search').click(); // Trigger the button click
-            }
-        });
-    </script>    
+    <script src="script.js"></script>
 </body>
 
 </html>
