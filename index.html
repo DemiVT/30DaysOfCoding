@@ -21,7 +21,7 @@
         }
 
         html, body {
-            overflow-x: hidden;
+            overflow-x: hidden; 
         }
 
         body {
@@ -38,16 +38,17 @@
         .navbar {
             background: var(--header-background);
             color: var(--secondary-color);
-            padding: 1rem 2rem;
+            padding: 1rem 2rem; 
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: fixed;
             top: 0;
-            width: 100%;
-            box-sizing: border-box;
+            width: 100%; 
+            box-sizing: border-box; 
             z-index: 1000;
             border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
         }
 
         .navbar .logo {
@@ -70,13 +71,13 @@
         .navbar .nav-links {
             display: flex;
             align-items: center;
-            gap: 1rem;
         }
 
         .navbar a {
             color: var(--secondary-color);
             text-decoration: none;
             font-size: 1.2rem;
+            margin: 0 1rem;
             transition: color var(--transition);
             position: relative;
         }
@@ -85,26 +86,94 @@
             color: var(--primary-color);
         }
 
+        .navbar a::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width var(--transition);
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+        }
+
+        .navbar a:hover::after {
+            width: 100%;
+        }
+
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+                justify-content: center;
+            }
+
+            .navbar .logo {
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+
+            .navbar .nav-links {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .navbar a {
+                margin: 0.5rem;
+            }
+        }
+
         .header {
             background: url('Task 2/Header Backdrop.jpg') no-repeat center center/cover;
             color: #fff;
             text-align: center;
             padding: 4rem 2rem;
-            margin-top: 5rem; /* Adjusted for fixed navbar */
             position: relative;
             z-index: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
         }
 
         .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            padding: 5rem 2rem;
+            text-align: center;
+            background: var(--header-background);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
             font-size: 2.5rem;
             margin-bottom: 1rem;
         }
 
-        .container {
-            width: 90%;
+        .section p {
             max-width: 800px;
             margin: 0 auto;
-            background: var(--header-background);
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--background-color);
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 2px 10px var(--shadow-color);
@@ -114,13 +183,12 @@
         .search_box {
             display: flex;
             justify-content: center;
+            align-items: center;
             margin-bottom: 2rem;
-            flex-wrap: wrap;
         }
 
         .search_box input {
-            width: 100%;
-            max-width: 400px;
+            width: 70%;
             padding: 1rem;
             border-radius: 20px;
             border: 1px solid var(--border-color);
@@ -129,27 +197,41 @@
             transition: border-color var(--transition);
         }
 
+        .search_box input:focus {
+            border-color: var(--primary-color);
+        }
+
         .search_box button {
             background: var(--primary-color);
             color: #fff;
             border: none;
             border-radius: 50%;
-            width: 4rem;
-            height: 4rem;
-            margin-left: 1rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            margin-left: -3rem;
             cursor: pointer;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             transition: background var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search_box button:hover {
+            background: #2980b9;
         }
 
         #show {
             margin-top: 2rem;
-            background-color: #5db2cc;
-            color: #000000;
+            background-color: #5db2cc; 
+            color: #000000; 
             padding: 1rem;
             border-radius: 10px;
             box-shadow: 0 2px 10px var(--shadow-color);
-            display: inline-block;
+            display: inline-block; 
+            text-align: left;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         #show img {
@@ -157,33 +239,18 @@
             margin-top: 1rem;
         }
 
-        .section {
-            padding: 5rem 2rem;
-            text-align: center;
-            background: var(--header-background);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .section h2 {
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .section img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 1rem;
-        }
-
         .footer {
-            background: var(--secondary-color);
-            color: #fff;
+            background: var(--header-background);
+            color: var(--secondary-color);
             text-align: center;
             padding: 1rem;
+            position: relative;
+            bottom: 0;
+            width: 100%;
             margin-top: auto;
             border-top: 1px solid var(--border-color);
+            background-color: black;
+            color: white;
         }
 
         .footer p {
@@ -191,55 +258,26 @@
         }
 
         .social-icons img {
-            width: 24px;
+            width: 24px; 
             height: 24px;
-            margin: 0 0.5rem;
+            margin: 0 0.5rem; 
             vertical-align: middle;
         }
 
         @media screen and (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                padding: 1rem;
-            }
-
-            .navbar .nav-links {
-                flex-direction: column;
-                align-items: center;
-                margin-top: 1rem;
-                gap: 0.5rem;
-            }
-
-            .navbar .nav-links a {
-                font-size: 1rem;
-            }
-
-            .header {
-                margin-top: 7rem;
-                padding: 2rem;
-            }
-
-            .header h1 {
-                font-size: 2rem;
+            .search_box input {
+                width: 60%;
             }
 
             .search_box button {
-                margin-left: 0;
-                width: 100%;
-                margin-top: 1rem;
+                width: 3rem;
+                height: 3rem;
+                font-size: 1.2rem;
+                margin-left: -2.5rem;
             }
 
-            .section {
-                padding: 3rem 1rem;
-            }
-
-            .footer {
-                padding: 1rem;
-            }
-
-            .social-icons img {
-                width: 20px;
-                height: 20px;
+            #show {
+                text-align: center;
             }
         }
     </style>
@@ -248,7 +286,7 @@
 <body>
     <div class="navbar">
         <div class="logo">
-            <img src="Task 2/logo.jpg" alt="Logo">
+            <img src="Task 2/logo.jpg" alt="Logo"> 
             <h1>Weather App</h1>
         </div>
         <div class="nav-links">
@@ -259,11 +297,11 @@
     </div>
 
     <header class="header" id="home">
-        <h1>Check Weather Of Any Location!</h1>
+        <h1>Check Weather Of Any Location !</h1>
         <div class="container">
             <div class="search_box">
                 <input type="text" placeholder="Enter a city name" id="city" autocomplete="off" />
-                <button id="search"><i class="fas fa-search"></i></button>
+                <button id="search"><i class="fas fa-search"></i></button> 
             </div>
             <div id="show"></div>
         </div>
@@ -271,28 +309,26 @@
 
     <section class="section" id="about">
         <h2>About Us</h2>
-        <img src="Task 2/About Us.png" alt="About Us Image">
+        <img src="Task 2/About Us.png" alt="About Us Image"> 
         <p>
-            Welcome to our Weather App! Our mission is to provide you with reliable and up-to-date weather information to make your life easier. With our user-friendly interface, you can get the latest weather updates quickly and accurately. We utilize advanced weather data sources to ensure you receive the best possible information. Whether you're planning a trip or just need to check the daily forecast, our app is here to help. Stay prepared and enjoy peace of mind with our comprehensive weather services.
-        </p>
+            Welcome to our Weather App! Our mission is to provide you with reliable and up-to-date weather information to make your life easier. With our user-friendly interface, you can get the latest weather updates quickly and accurately. We utilize advanced weather data sources to ensure you receive the best possible information. Whether you're planning a trip or just need to check the daily forecast, our app is here to assist you.</p>
+        <p>Our team is dedicated to creating a seamless experience for our users, and we're constantly updating our app with new features to better serve you. Stay tuned for more updates!</p>
     </section>
 
     <section class="section" id="contact">
         <h2>Contact Us</h2>
-        <img src="Task 2/contact us.avif "alt="Contact Us Image">
-        <p>If you have any questions, feel free to reach out to us. We'd love to hear from you!</p>
+        <img src="Task 2/Contact Us.png" alt="Contact Us Image">
+        <p>We're here to help! If you have any questions, feedback, or inquiries, please feel free to reach out to us. Our team is always ready to assist you with any weather-related information or support you may need.</p>
         <div class="social-icons">
-           <a href="https://twitter.com/weatherapp" target="_blank"><img src="Task 2/twitter.webp" alt="Twitter"></a> 
-            <a href="https://facebook.com/weatherapp" target="_blank"><img src="Task 2/facebook.webp" alt="Facebook"></a> 
-            <a href="https://instagram.com/weatherapp" target="_blank"><img src="Task 2/insta.jpg" alt="Instagram"></a>
+            <a href="https://twitter.com"><img src="Task 2/twitter.png" alt="Twitter Icon"></a>
+            <a href="https://facebook.com"><img src="Task 2/facebook.png" alt="Facebook Icon"></a>
+            <a href="https://instagram.com"><img src="Task 2/instagram.png" alt="Instagram Icon"></a>
         </div>
     </section>
 
     <footer class="footer">
         <p>&copy; 2024 Weather App. All rights reserved.</p>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 
 </html>
