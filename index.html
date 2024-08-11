@@ -38,7 +38,7 @@
         .navbar {
             background: var(--header-background);
             color: var(--secondary-color);
-            padding: 1rem 2rem;
+            padding: 0.5rem 1rem; /* Reduced padding */
             display: flex;
             justify-content: flex-start; 
             align-items: center;
@@ -48,6 +48,8 @@
             box-sizing: border-box;
             z-index: 1000;
             border-bottom: 1px solid var(--border-color);
+            height: 60px; /* Fixed height */
+            box-shadow: 0 2px 5px var(--shadow-color); /* Added shadow for better visibility */
         }
 
         .navbar .logo {
@@ -57,21 +59,21 @@
         }
 
         .navbar .logo img {
-            width: 40px;
+            width: 30px; /* Adjusted size */
             height: auto;
-            margin-right: 1rem;
+            margin-right: 0.5rem;
         }
 
         .navbar .logo h1 {
             margin: 0;
-            font-size: 1.5rem;
+            font-size: 1.2rem; /* Adjusted font size */
             color: var(--secondary-color);
         }
 
         .navbar a {
             color: var(--secondary-color);
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1rem; /* Adjusted font size */
             margin: 0 1rem;
             transition: color var(--transition);
             position: relative;
@@ -105,6 +107,7 @@
             position: relative;
             z-index: 1;
             border-bottom: 1px solid var(--border-color);
+            margin-top: 60px; /* Adjusted margin to account for the fixed navbar */
         }
 
         .header::before {
@@ -277,64 +280,54 @@
         <h2>Contact Us</h2>
         <img src="Task 2/contact us.avif" alt="Contact Us Image">
         <p>We value your feedback and are here to assist you with any questions or issues you may have. Reach out to us through the following methods:</p>
-        <p>Email: <a href="mailto:support@weatherapp.com">support@weatherapp.com</a></p>
-        <p>Phone: <a href="tel:1234567890">1234567890</a></p>
-        <p>For further inquiries, you can connect with us on our social media channels:</p>
-        <p class="social-icons">
-            <a href="https://twitter.com/weatherapp" target="_blank"><img src="Task 2/twitter.webp" alt="Twitter"></a>
-            <a href="https://facebook.com/weatherapp" target="_blank"><img src="Task 2/facebook.webp" alt="Facebook"></a>
-            <a href="https://instagram.com/weatherapp" target="_blank"><img src="Task 2/insta.jpg" alt="Instagram"></a>
-        </p>
+        <p>Email: <a href="mailto:info@weatherapp.com">info@weatherapp.com</a></p>
+        <p>Phone: <a href="tel:+1234567890">+123-456-7890</a></p>
+        <p>Follow us on social media to stay updated with the latest features and announcements!</p>
+        <div class="social-icons">
+            <a href="#"><img src="Task 2/facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="Task 2/twitter.png" alt="Twitter"></a>
+            <a href="#"><img src="Task 2/instagram.png" alt="Instagram"></a>
+        </div>
     </section>
 
     <footer class="footer">
         <p>&copy; 2024 Weather App. All rights reserved.</p>
-            <p>By Viraj Tupe </p>
     </footer>
 
-   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        document.getElementById('search').addEventListener('click', function() {
-            const city = document.getElementById('city').value;
-            const apiKey = 'a3f3dda8f2e664204b1fecbeba0f3d7d'; 
-            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-        
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.cod === 200) {
-                        const weather = data.weather[0].description;
-                        const temp = data.main.temp;
-                        const humidity = data.main.humidity;
-                        const windSpeed = data.wind.speed;
-                        const visibility = data.visibility / 1000; // Convert visibility to kilometers
-                        const icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
-        
-                        document.getElementById('show').innerHTML = `
-                            <h3>Weather in ${city}</h3>
-                            <img src="${icon}" alt="${weather}">
-                            <p><span class="weather-attribute">Description:</span> ${weather}</p>
-                            <p><span class="weather-attribute">Temperature:</span> ${temp}°C</p>
-                            <p><span class="weather-attribute">Humidity:</span> ${humidity}%</p>
-                            <p><span class="weather-attribute">Wind Speed:</span> ${windSpeed} m/s</p>
-                            <p><span class="weather-attribute">Visibility:</span> ${visibility} km</p>
-                        `;
-                    } else {
-                        document.getElementById('show').innerHTML = `<p>City not found.</p>`;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('show').innerHTML = `<p>Something went wrong.</p>`;
-                });
-        });
+        $(document).ready(function() {
+            $("#search").click(function() {
+                var city = $("#city").val();
+                if (city != "") {
+                    $.ajax({
+                        url: 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=metric&appid=5a8a56be5d857507c1465096296caebf',
+                        type: "GET",
+                        dataType: "jsonp",
+                        success: function(data) {
+                            var widget = show(data);
+                            $("#show").html(widget);
+                            $("#city").val('');
+                        }
+                    });
+                } else {
+                    $("#error").html('Field cannot be empty');
+                }
+            });
 
-        document.getElementById('city').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                document.getElementById('search').click(); // Trigger the button click
+            function show(data) {
+                return `
+                    <h2>${data.name}, ${data.sys.country}</h2>
+                    <h3><strong>Weather:</strong> ${data.weather[0].main}</h3>
+                    <h3><strong>Description:</strong> ${data.weather[0].description}</h3>
+                    <h3><strong>Temperature:</strong> ${data.main.temp} &deg;C</h3>
+                    <h3><strong>Humidity:</strong> ${data.main.humidity} %</h3>
+                    <h3><strong>Wind Speed:</strong> ${data.wind.speed} m/s</h3>
+                    <img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png">
+                `;
             }
         });
-    </script> 
+    </script>
 </body>
 
 </html>
