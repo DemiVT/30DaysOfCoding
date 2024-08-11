@@ -40,7 +40,7 @@
             color: var(--secondary-color);
             padding: 1rem 2rem;
             display: flex;
-            justify-content: space-between; /* Updated to distribute space */
+            justify-content: flex-start; 
             align-items: center;
             position: fixed;
             top: 0;
@@ -48,7 +48,6 @@
             box-sizing: border-box;
             z-index: 1000;
             border-bottom: 1px solid var(--border-color);
-            white-space: nowrap; /* Prevents navbar items from wrapping */
         }
 
         .navbar .logo {
@@ -67,12 +66,6 @@
             margin: 0;
             font-size: 1.5rem;
             color: var(--secondary-color);
-            white-space: nowrap; /* Prevents logo text from wrapping */
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 1rem; /* Adds space between links */
         }
 
         .navbar a {
@@ -82,7 +75,6 @@
             margin: 0 1rem;
             transition: color var(--transition);
             position: relative;
-            white-space: nowrap; /* Prevents links from wrapping */
         }
 
         .navbar a:hover {
@@ -286,50 +278,65 @@
         <img src="Task 2/contact us.avif" alt="Contact Us Image">
         <p>We value your feedback and are here to assist you with any questions or issues you may have. Reach out to us through the following methods:</p>
         <p>Email: <a href="mailto:support@weatherapp.com">support@weatherapp.com</a></p>
-          <p>Phone: <a href="tel:1234567890">123-456-7890</a></p>
-        <p>Address: 123 Weather Lane, Suite 456, City, Country</p>
+        <p>Phone: <a href="tel:1234567890">1234567890</a></p>
+        <p>For further inquiries, you can connect with us on our social media channels:</p>
+        <p class="social-icons">
+            <a href="https://twitter.com/weatherapp" target="_blank"><img src="Task 2/twitter.webp" alt="Twitter"></a>
+            <a href="https://facebook.com/weatherapp" target="_blank"><img src="Task 2/facebook.webp" alt="Facebook"></a>
+            <a href="https://instagram.com/weatherapp" target="_blank"><img src="Task 2/insta.jpg" alt="Instagram"></a>
+        </p>
     </section>
 
     <footer class="footer">
         <p>&copy; 2024 Weather App. All rights reserved.</p>
-        <div class="social-icons">
-            <a href="https://facebook.com"><img src="facebook-icon.png" alt="Facebook"></a>
-            <a href="https://twitter.com"><img src="twitter-icon.png" alt="Twitter"></a>
-            <a href="https://instagram.com"><img src="instagram-icon.png" alt="Instagram"></a>
-            <a href="https://linkedin.com"><img src="linkedin-icon.png" alt="LinkedIn"></a>
-        </div>
+            <p>By Viraj Tupe </p>
     </footer>
 
+   
     <script>
         document.getElementById('search').addEventListener('click', function() {
             const city = document.getElementById('city').value;
-            if (city) {
-                fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=YOUR_API_KEY`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.cod === '404') {
-                            document.getElementById('show').innerHTML = `<p>City not found.</p>`;
-                        } else {
-                            const weather = `
-                                <h2>Weather in ${data.name}</h2>
-                                <p>Temperature: ${(data.main.temp - 273.15).toFixed(2)}°C</p>
-                                <p>Weather: ${data.weather[0].description}</p>
-                                <p>Humidity: ${data.main.humidity}%</p>
-                                <p>Wind Speed: ${data.wind.speed} m/s</p>
-                                <img src="http://openweathermap.org/img/wn/${data.weather[0].icon}.png" alt="Weather Icon">
-                            `;
-                            document.getElementById('show').innerHTML = weather;
-                        }
-                    })
-                    .catch(error => {
-                        document.getElementById('show').innerHTML = `<p>Error fetching weather data.</p>`;
-                    });
-            } else {
-                document.getElementById('show').innerHTML = `<p>Please enter a city name.</p>`;
+            const apiKey = 'a3f3dda8f2e664204b1fecbeba0f3d7d'; 
+            const url = https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric;
+        
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cod === 200) {
+                        const weather = data.weather[0].description;
+                        const temp = data.main.temp;
+                        const humidity = data.main.humidity;
+                        const windSpeed = data.wind.speed;
+                        const visibility = data.visibility / 1000; // Convert visibility to kilometers
+                        const icon = http://openweathermap.org/img/wn/${data.weather[0].icon}.png;
+        
+                        document.getElementById('show').innerHTML = 
+                            <h3>Weather in ${city}</h3>
+                            <img src="${icon}" alt="${weather}">
+                            <p><span class="weather-attribute">Description:</span> ${weather}</p>
+                            <p><span class="weather-attribute">Temperature:</span> ${temp}°C</p>
+                            <p><span class="weather-attribute">Humidity:</span> ${humidity}%</p>
+                            <p><span class="weather-attribute">Wind Speed:</span> ${windSpeed} m/s</p>
+                            <p><span class="weather-attribute">Visibility:</span> ${visibility} km</p>
+                        ;
+                    } else {
+                        document.getElementById('show').innerHTML = <p>City not found.</p>;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('show').innerHTML = <p>Something went wrong.</p>;
+                });
+        });
+
+        document.getElementById('city').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('search').click(); // Trigger the button click
             }
         });
-    </script>
+    </script> 
 </body>
 
 </html>
+
 
