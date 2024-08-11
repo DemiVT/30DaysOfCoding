@@ -229,6 +229,26 @@
             margin-top: 1rem;
         }
 
+   #show {
+    display: none; 
+    margin: 2rem auto; 
+    background-color: #5db2cc; 
+    color: #000000; 
+    padding: 1rem;
+    border-radius: 10px; 
+    box-shadow: 0 2px 10px var(--shadow-color);
+    width: 90%; 
+    max-width: 600px; 
+    height: 200px; 
+    box-sizing: border-box; 
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+}
+
+
         .footer {
             background: var(--header-background);
             color: var(--secondary-color);
@@ -259,7 +279,6 @@
             height: auto;
         }
 
-        /* Mobile Styles */
         @media (max-width: 768px) {
             .navbar .nav-links {
                 display: none;
@@ -305,7 +324,7 @@
         <h1>Check Weather Of Any Location !</h1>
         <div class="container">
             <div class="search_box">
-                <input type="text" placeholder="Enter a city name" id="city" autocomplete="off" />
+                <input type="text" placeholder="Enter a Location Name :- " id="city" autocomplete="off" />
                 <button id="search"><i class="fas fa-search"></i></button>
             </div>
             <div id="show"></div>
@@ -367,6 +386,7 @@
                         const visibility = data.visibility / 1000; 
                         const icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
 
+                        
                         document.getElementById('show').innerHTML = `
                             <h3>Weather in ${city}</h3>
                             <img src="${icon}" alt="${weather}">
@@ -377,7 +397,7 @@
                             <p><span class="weather-attribute">Visibility:</span> ${visibility} km</p>
                         `;
 
-                        
+                    
                         document.getElementById('show').style.display = 'block';
                     } else {
                         document.getElementById('show').innerHTML = `<p>City not found.</p>`;
@@ -390,7 +410,6 @@
                     console.error('Error:', error);
                     document.getElementById('show').innerHTML = `<p>Something went wrong.</p>`;
 
-                    
                     document.getElementById('show').style.display = 'block';
                 });
         });
