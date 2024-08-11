@@ -40,7 +40,7 @@
             color: var(--secondary-color);
             padding: 1rem 2rem;
             display: flex;
-            justify-content: space-between; 
+            justify-content: space-between; /* Updated to space-between */
             align-items: center;
             position: fixed;
             top: 0;
@@ -53,6 +53,7 @@
         .navbar .logo {
             display: flex;
             align-items: center;
+            margin-right: auto;
         }
 
         .navbar .logo img {
@@ -69,6 +70,7 @@
 
         .navbar .nav-links {
             display: flex;
+            align-items: center;
         }
 
         .navbar .nav-links a {
@@ -100,14 +102,18 @@
             width: 100%;
         }
 
-        .navbar .menu-icon {
+        .navbar .menu-toggle {
             display: none;
-            font-size: 2rem;
             cursor: pointer;
         }
 
-        .navbar .nav-links {
-            display: flex;
+        .navbar .menu-toggle .bar {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--secondary-color);
+            margin: 5px 0;
+            transition: all 0.3s ease;
         }
 
         .header {
@@ -263,24 +269,15 @@
                 position: absolute;
                 top: 60px;
                 left: 0;
-                padding: 1rem;
-                box-shadow: 0 2px 10px var(--shadow-color);
+                border-top: 1px solid var(--border-color);
             }
 
             .navbar .nav-links.active {
                 display: flex;
             }
 
-            .navbar .menu-icon {
+            .navbar .menu-toggle {
                 display: block;
-            }
-
-            .navbar .nav-links a {
-                margin: 1rem 0;
-            }
-
-            .navbar .logo {
-                margin-right: 0;
             }
         }
     </style>
@@ -292,8 +289,10 @@
             <img src="Task 2/logo.jpg" alt="Logo">
             <h1>Weather App</h1>
         </div>
-        <div class="menu-icon" onclick="toggleMenu()">
-            <i class="fas fa-bars"></i>
+        <div class="menu-toggle">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
         </div>
         <div class="nav-links">
             <a href="#home">Home</a>
@@ -316,28 +315,28 @@
     <section class="section" id="about">
         <h2>About Us</h2>
         <img src="Task 2/About Us.png" alt="About Us Image">
-        <p>Weather App helps you to check the current weather of any city around the globe. Enter the name of the city, and get the latest weather information instantly.</p>
+        <p>Welcome to our Weather App! We provide accurate and up-to-date weather information for any location. Our app is designed to be user-friendly and informative, ensuring you have the latest weather updates at your fingertips.</p>
     </section>
 
     <section class="section" id="contact">
         <h2>Contact Us</h2>
-        <img src="Task 2/Contact Us.png" alt="Contact Us Image">
-        <p>If you have any questions or feedback, feel free to contact us at <a href="mailto:info@weatherapp.com">info@weatherapp.com</a>.</p>
+        <p>If you have any questions or feedback, feel free to reach out to us. We're here to help!</p>
     </section>
 
     <footer class="footer">
         <p>&copy; 2024 Weather App. All rights reserved.</p>
         <div class="social-icons">
-            <a href="https://www.linkedin.com/in/viraj-tupe-a87a15247" target="_blank"><img src="social_icons/linkedin.png" alt="LinkedIn"></a>
-            <a href="https://www.youtube.com/c/YourChannel" target="_blank"><img src="social_icons/youtube.png" alt="YouTube"></a>
+            <a href="https://facebook.com"><img src="social-icons/facebook.png" alt="Facebook"></a>
+            <a href="https://twitter.com"><img src="social-icons/twitter.png" alt="Twitter"></a>
+            <a href="https://instagram.com"><img src="social-icons/instagram.png" alt="Instagram"></a>
         </div>
     </footer>
 
     <script>
-        function toggleMenu() {
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
-        }
+        });
     </script>
 </body>
 
