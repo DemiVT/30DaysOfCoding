@@ -340,12 +340,48 @@
       
     </footer>
 
-    <script>
-        document.querySelector('.menu-toggle').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
+ <script>
+        document.getElementById('search').addEventListener('click', function() {
+            const city = document.getElementById('city').value;
+            const apiKey = 'a3f3dda8f2e664204b1fecbeba0f3d7d'; 
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+        
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cod === 200) {
+                        const weather = data.weather[0].description;
+                        const temp = data.main.temp;
+                        const humidity = data.main.humidity;
+                        const windSpeed = data.wind.speed;
+                        const visibility = data.visibility / 1000; // Convert visibility to kilometers
+                        const icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+        
+                        document.getElementById('show').innerHTML = `
+                            <h3>Weather in ${city}</h3>
+                            <img src="${icon}" alt="${weather}">
+                            <p><span class="weather-attribute">Description:</span> ${weather}</p>
+                            <p><span class="weather-attribute">Temperature:</span> ${temp}°C</p>
+                            <p><span class="weather-attribute">Humidity:</span> ${humidity}%</p>
+                            <p><span class="weather-attribute">Wind Speed:</span> ${windSpeed} m/s</p>
+                            <p><span class="weather-attribute">Visibility:</span> ${visibility} km</p>
+                        `;
+                    } else {
+                        document.getElementById('show').innerHTML = `<p>City not found.</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('show').innerHTML = `<p>Something went wrong.</p>`;
+                });
         });
-    </script>
+
+        document.getElementById('city').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('search').click(); // Trigger the button click
+            }
+        });
+    </script> 
 </body>
 
 </html>
