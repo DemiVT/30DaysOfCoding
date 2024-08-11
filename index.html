@@ -38,9 +38,9 @@
         .navbar {
             background: var(--header-background);
             color: var(--secondary-color);
-            padding: 0.5rem 1rem; /* Reduced padding */
+            padding: 1rem 2rem;
             display: flex;
-            justify-content: flex-start; 
+            justify-content: space-between; /* Updated to distribute space */
             align-items: center;
             position: fixed;
             top: 0;
@@ -48,8 +48,7 @@
             box-sizing: border-box;
             z-index: 1000;
             border-bottom: 1px solid var(--border-color);
-            height: 60px; /* Fixed height */
-            box-shadow: 0 2px 5px var(--shadow-color); /* Added shadow for better visibility */
+            white-space: nowrap; /* Prevents navbar items from wrapping */
         }
 
         .navbar .logo {
@@ -59,24 +58,31 @@
         }
 
         .navbar .logo img {
-            width: 30px; /* Adjusted size */
+            width: 40px;
             height: auto;
-            margin-right: 0.5rem;
+            margin-right: 1rem;
         }
 
         .navbar .logo h1 {
             margin: 0;
-            font-size: 1.2rem; /* Adjusted font size */
+            font-size: 1.5rem;
             color: var(--secondary-color);
+            white-space: nowrap; /* Prevents logo text from wrapping */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem; /* Adds space between links */
         }
 
         .navbar a {
             color: var(--secondary-color);
             text-decoration: none;
-            font-size: 1rem; /* Adjusted font size */
+            font-size: 1.2rem;
             margin: 0 1rem;
             transition: color var(--transition);
             position: relative;
+            white-space: nowrap; /* Prevents links from wrapping */
         }
 
         .navbar a:hover {
@@ -107,7 +113,6 @@
             position: relative;
             z-index: 1;
             border-bottom: 1px solid var(--border-color);
-            margin-top: 60px; /* Adjusted margin to account for the fixed navbar */
         }
 
         .header::before {
@@ -280,54 +285,51 @@
         <h2>Contact Us</h2>
         <img src="Task 2/contact us.avif" alt="Contact Us Image">
         <p>We value your feedback and are here to assist you with any questions or issues you may have. Reach out to us through the following methods:</p>
-        <p>Email: <a href="mailto:info@weatherapp.com">info@weatherapp.com</a></p>
-        <p>Phone: <a href="tel:+1234567890">+123-456-7890</a></p>
-        <p>Follow us on social media to stay updated with the latest features and announcements!</p>
-        <div class="social-icons">
-            <a href="#"><img src="Task 2/facebook.png" alt="Facebook"></a>
-            <a href="#"><img src="Task 2/twitter.png" alt="Twitter"></a>
-            <a href="#"><img src="Task 2/instagram.png" alt="Instagram"></a>
-        </div>
+        <p>Email: <a href="mailto:support@weatherapp.com">support@weatherapp.com</a></p>
+          <p>Phone: <a href="tel:1234567890">123-456-7890</a></p>
+        <p>Address: 123 Weather Lane, Suite 456, City, Country</p>
     </section>
 
     <footer class="footer">
         <p>&copy; 2024 Weather App. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="https://facebook.com"><img src="facebook-icon.png" alt="Facebook"></a>
+            <a href="https://twitter.com"><img src="twitter-icon.png" alt="Twitter"></a>
+            <a href="https://instagram.com"><img src="instagram-icon.png" alt="Instagram"></a>
+            <a href="https://linkedin.com"><img src="linkedin-icon.png" alt="LinkedIn"></a>
+        </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#search").click(function() {
-                var city = $("#city").val();
-                if (city != "") {
-                    $.ajax({
-                        url: 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=metric&appid=5a8a56be5d857507c1465096296caebf',
-                        type: "GET",
-                        dataType: "jsonp",
-                        success: function(data) {
-                            var widget = show(data);
-                            $("#show").html(widget);
-                            $("#city").val('');
+        document.getElementById('search').addEventListener('click', function() {
+            const city = document.getElementById('city').value;
+            if (city) {
+                fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=YOUR_API_KEY`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.cod === '404') {
+                            document.getElementById('show').innerHTML = `<p>City not found.</p>`;
+                        } else {
+                            const weather = `
+                                <h2>Weather in ${data.name}</h2>
+                                <p>Temperature: ${(data.main.temp - 273.15).toFixed(2)}°C</p>
+                                <p>Weather: ${data.weather[0].description}</p>
+                                <p>Humidity: ${data.main.humidity}%</p>
+                                <p>Wind Speed: ${data.wind.speed} m/s</p>
+                                <img src="http://openweathermap.org/img/wn/${data.weather[0].icon}.png" alt="Weather Icon">
+                            `;
+                            document.getElementById('show').innerHTML = weather;
                         }
+                    })
+                    .catch(error => {
+                        document.getElementById('show').innerHTML = `<p>Error fetching weather data.</p>`;
                     });
-                } else {
-                    $("#error").html('Field cannot be empty');
-                }
-            });
-
-            function show(data) {
-                return `
-                    <h2>${data.name}, ${data.sys.country}</h2>
-                    <h3><strong>Weather:</strong> ${data.weather[0].main}</h3>
-                    <h3><strong>Description:</strong> ${data.weather[0].description}</h3>
-                    <h3><strong>Temperature:</strong> ${data.main.temp} &deg;C</h3>
-                    <h3><strong>Humidity:</strong> ${data.main.humidity} %</h3>
-                    <h3><strong>Wind Speed:</strong> ${data.wind.speed} m/s</h3>
-                    <img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png">
-                `;
+            } else {
+                document.getElementById('show').innerHTML = `<p>Please enter a city name.</p>`;
             }
         });
     </script>
 </body>
 
 </html>
+
