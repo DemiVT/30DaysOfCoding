@@ -212,13 +212,13 @@
         }
 
         #show {
+            display: none; /* Hide by default */
             margin-top: 2rem;
             background-color: #5db2cc;
             color: #000000;
             padding: 1rem;
             border-radius: 10px;
             box-shadow: 0 2px 10px var(--shadow-color);
-            display: inline-block;
             width: 100%;
             box-sizing: border-box;
             word-wrap: break-word;
@@ -316,7 +316,7 @@
         <h2>About Us</h2>
         <img src="Task 2/About Us.png" alt="About Us Image">
         <p>
-            Welcome to our Weather App! Our mission is to provide you with reliable and up-to-date weather information to make your life easier. With our user-friendly interface, you can get the latest weather updates quickly and accurately. We utilize advanced weather data sources to ensure that you receive precise forecasts for any location.
+            Welcome to our Weather App! Our mission is to provide you with reliable and up-to-date weather information to make your life easier. With our app, you can check the weather conditions for any location worldwide. We are committed to delivering accurate forecasts and helping you plan your day effectively.
         </p>
     </section>
 
@@ -324,32 +324,81 @@
         <h2>Contact Us</h2>
         <img src="Task 2/Contact Us.png" alt="Contact Us Image">
         <p>
-            If you have any questions or feedback, feel free to reach out to us. We are always happy to hear from our users and improve our services. You can contact us via email at <a href="mailto:support@weatherapp.com">support@weatherapp.com</a> or follow us on our social media channels for updates.
+            Have questions or feedback? Feel free to reach out to us at:
         </p>
+        <p>
+            Email: <a href="mailto:info@example.com">info@example.com</a>
+        </p>
+        <p>
+            Follow us on social media:
+        </p>
+        <div class="social-icons">
+            <a href="https://facebook.com"><img src="Task 2/facebook.png" alt="Facebook"></a>
+            <a href="https://twitter.com"><img src="Task 2/twitter.png" alt="Twitter"></a>
+            <a href="https://instagram.com"><img src="Task 2/instagram.png" alt="Instagram"></a>
+        </div>
     </section>
 
     <footer class="footer">
         <p>&copy; 2024 Weather App. All rights reserved.</p>
-        <div class="social-icons">
-            <a href="#"><img src="Task 2/facebook-icon.png" alt="Facebook"></a>
-            <a href="#"><img src="Task 2/twitter-icon.png" alt="Twitter"></a>
-            <a href="#"><img src="Task 2/instagram-icon.png" alt="Instagram"></a>
-        </div>
     </footer>
 
     <script>
         document.querySelector('.menu-toggle').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
+            document.querySelector('.nav-links').classList.toggle('active');
         });
 
-        document.querySelector('#search').addEventListener('click', function() {
-            const city = document.querySelector('#city').value;
-            if (city) {
-                
-                document.querySelector('#show').innerHTML = `<p>Weather data for ${city}</p>`;
-            } else {
-                document.querySelector('#show').innerHTML = '<p>Please enter a city name.</p>';
+        document.getElementById('search').addEventListener('click', function() {
+            const city = document.getElementById('city').value;
+            const apiKey = 'a3f3dda8f2e664204b1fecbeba0f3d7d';
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+            // Hide the #show element initially
+            document.getElementById('show').style.display = 'none';
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cod === 200) {
+                        const weather = data.weather[0].description;
+                        const temp = data.main.temp;
+                        const humidity = data.main.humidity;
+                        const windSpeed = data.wind.speed;
+                        const visibility = data.visibility / 1000; // Convert visibility to kilometers
+                        const icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+
+                        // Update and display the #show element
+                        document.getElementById('show').innerHTML = `
+                            <h3>Weather in ${city}</h3>
+                            <img src="${icon}" alt="${weather}">
+                            <p><span class="weather-attribute">Description:</span> ${weather}</p>
+                            <p><span class="weather-attribute">Temperature:</span> ${temp}°C</p>
+                            <p><span class="weather-attribute">Humidity:</span> ${humidity}%</p>
+                            <p><span class="weather-attribute">Wind Speed:</span> ${windSpeed} m/s</p>
+                            <p><span class="weather-attribute">Visibility:</span> ${visibility} km</p>
+                        `;
+
+                        // Show the #show element
+                        document.getElementById('show').style.display = 'block';
+                    } else {
+                        document.getElementById('show').innerHTML = `<p>City not found.</p>`;
+
+                        // Show the #show element
+                        document.getElementById('show').style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('show').innerHTML = `<p>Something went wrong.</p>`;
+
+                    // Show the #show element
+                    document.getElementById('show').style.display = 'block';
+                });
+        });
+
+        document.getElementById('city').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('search').click(); // Trigger the button click
             }
         });
     </script>
