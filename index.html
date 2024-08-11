@@ -40,7 +40,7 @@
             color: var(--secondary-color);
             padding: 1rem 2rem;
             display: flex;
-            justify-content: flex-start; 
+            justify-content: space-between; 
             align-items: center;
             position: fixed;
             top: 0;
@@ -53,7 +53,6 @@
         .navbar .logo {
             display: flex;
             align-items: center;
-            margin-right: auto;
         }
 
         .navbar .logo img {
@@ -68,7 +67,11 @@
             color: var(--secondary-color);
         }
 
-        .navbar a {
+        .navbar .nav-links {
+            display: flex;
+        }
+
+        .navbar .nav-links a {
             color: var(--secondary-color);
             text-decoration: none;
             font-size: 1.2rem;
@@ -77,11 +80,11 @@
             position: relative;
         }
 
-        .navbar a:hover {
+        .navbar .nav-links a:hover {
             color: var(--primary-color);
         }
 
-        .navbar a::after {
+        .navbar .nav-links a::after {
             content: '';
             display: block;
             width: 0;
@@ -93,8 +96,18 @@
             left: 0;
         }
 
-        .navbar a:hover::after {
+        .navbar .nav-links a:hover::after {
             width: 100%;
+        }
+
+        .navbar .menu-icon {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .navbar .nav-links {
+            display: flex;
         }
 
         .header {
@@ -239,6 +252,37 @@
             max-width: 100%;
             height: auto;
         }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .navbar .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: var(--header-background);
+                position: absolute;
+                top: 60px;
+                left: 0;
+                padding: 1rem;
+                box-shadow: 0 2px 10px var(--shadow-color);
+            }
+
+            .navbar .nav-links.active {
+                display: flex;
+            }
+
+            .navbar .menu-icon {
+                display: block;
+            }
+
+            .navbar .nav-links a {
+                margin: 1rem 0;
+            }
+
+            .navbar .logo {
+                margin-right: 0;
+            }
+        }
     </style>
 </head>
 
@@ -247,6 +291,9 @@
         <div class="logo">
             <img src="Task 2/logo.jpg" alt="Logo">
             <h1>Weather App</h1>
+        </div>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
         </div>
         <div class="nav-links">
             <a href="#home">Home</a>
@@ -269,74 +316,29 @@
     <section class="section" id="about">
         <h2>About Us</h2>
         <img src="Task 2/About Us.png" alt="About Us Image">
-        <p>Welcome to our Weather App! Our mission is to provide you with reliable and up-to-date weather information to make your life easier. With our user-friendly interface, you can get the latest weather updates quickly and accurately. We utilize advanced weather data sources to ensure you receive the best possible information. Whether you're planning a trip or just need to check the daily forecast, our app is here to assist you.</p>
-        <p>Our team is dedicated to creating a seamless experience for users by integrating real-time weather data, interactive features, and a clean, intuitive design. We believe that staying informed about the weather should be simple and straightforward.</p>
+        <p>Weather App helps you to check the current weather of any city around the globe. Enter the name of the city, and get the latest weather information instantly.</p>
     </section>
 
     <section class="section" id="contact">
         <h2>Contact Us</h2>
-        <img src="Task 2/contact us.avif" alt="Contact Us Image">
-        <p>We value your feedback and are here to assist you with any questions or issues you may have. Reach out to us through the following methods:</p>
-        <p>Email: <a href="mailto:support@weatherapp.com">support@weatherapp.com</a></p>
-        <p>Phone: <a href="tel:1234567890">1234567890</a></p>
-        <p>For further inquiries, you can connect with us on our social media channels:</p>
-        <p class="social-icons">
-            <a href="https://twitter.com/weatherapp" target="_blank"><img src="Task 2/twitter.webp" alt="Twitter"></a>
-            <a href="https://facebook.com/weatherapp" target="_blank"><img src="Task 2/facebook.webp" alt="Facebook"></a>
-            <a href="https://instagram.com/weatherapp" target="_blank"><img src="Task 2/insta.jpg" alt="Instagram"></a>
-        </p>
+        <img src="Task 2/Contact Us.png" alt="Contact Us Image">
+        <p>If you have any questions or feedback, feel free to contact us at <a href="mailto:info@weatherapp.com">info@weatherapp.com</a>.</p>
     </section>
 
     <footer class="footer">
         <p>&copy; 2024 Weather App. All rights reserved.</p>
-            <p>By Viraj Tupe </p>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/viraj-tupe-a87a15247" target="_blank"><img src="social_icons/linkedin.png" alt="LinkedIn"></a>
+            <a href="https://www.youtube.com/c/YourChannel" target="_blank"><img src="social_icons/youtube.png" alt="YouTube"></a>
+        </div>
     </footer>
 
-   
     <script>
-        document.getElementById('search').addEventListener('click', function() {
-            const city = document.getElementById('city').value;
-            const apiKey = 'a3f3dda8f2e664204b1fecbeba0f3d7d'; 
-            const url = https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric;
-        
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.cod === 200) {
-                        const weather = data.weather[0].description;
-                        const temp = data.main.temp;
-                        const humidity = data.main.humidity;
-                        const windSpeed = data.wind.speed;
-                        const visibility = data.visibility / 1000; // Convert visibility to kilometers
-                        const icon = http://openweathermap.org/img/wn/${data.weather[0].icon}.png;
-        
-                        document.getElementById('show').innerHTML = 
-                            <h3>Weather in ${city}</h3>
-                            <img src="${icon}" alt="${weather}">
-                            <p><span class="weather-attribute">Description:</span> ${weather}</p>
-                            <p><span class="weather-attribute">Temperature:</span> ${temp}°C</p>
-                            <p><span class="weather-attribute">Humidity:</span> ${humidity}%</p>
-                            <p><span class="weather-attribute">Wind Speed:</span> ${windSpeed} m/s</p>
-                            <p><span class="weather-attribute">Visibility:</span> ${visibility} km</p>
-                        ;
-                    } else {
-                        document.getElementById('show').innerHTML = <p>City not found.</p>;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('show').innerHTML = <p>Something went wrong.</p>;
-                });
-        });
-
-        document.getElementById('city').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                document.getElementById('search').click(); // Trigger the button click
-            }
-        });
-    </script> 
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
 </body>
 
 </html>
-
-
