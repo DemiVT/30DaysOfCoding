@@ -351,7 +351,7 @@
         document.getElementById('search').addEventListener('click', function() {
             const city = document.getElementById('city').value;
             const apiKey = 'a3f3dda8f2e664204b1fecbeba0f3d7d';
-            const url = https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric;
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
             document.getElementById('show').style.display = 'none';
 
@@ -364,10 +364,10 @@
                         const humidity = data.main.humidity;
                         const windSpeed = data.wind.speed;
                         const visibility = data.visibility / 1000; 
-                        const icon = http://openweathermap.org/img/wn/${data.weather[0].icon}.png;
+                        const icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
 
                         
-                        document.getElementById('show').innerHTML = 
+                        document.getElementById('show').innerHTML = `
                             <h3>Weather in ${city}</h3>
                             <img src="${icon}" alt="${weather}">
                             <p><span class="weather-attribute">Description:</span> ${weather}</p>
@@ -375,12 +375,12 @@
                             <p><span class="weather-attribute">Humidity:</span> ${humidity}%</p>
                             <p><span class="weather-attribute">Wind Speed:</span> ${windSpeed} m/s</p>
                             <p><span class="weather-attribute">Visibility:</span> ${visibility} km</p>
-                        ;
+                        `;
 
                     
                         document.getElementById('show').style.display = 'block';
                     } else {
-                        document.getElementById('show').innerHTML = <p>City not found.</p>;
+                        document.getElementById('show').innerHTML = `<p>City not found.</p>`;
 
                        
                         document.getElementById('show').style.display = 'block';
@@ -388,7 +388,7 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    document.getElementById('show').innerHTML = <p>Something went wrong.</p>;
+                    document.getElementById('show').innerHTML = `<p>Something went wrong.</p>`;
 
                     document.getElementById('show').style.display = 'block';
                 });
