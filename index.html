@@ -21,7 +21,7 @@
         }
 
         html, body {
-            overflow-x: hidden; 
+            overflow-x: hidden;
         }
 
         body {
@@ -38,15 +38,14 @@
         .navbar {
             background: var(--header-background);
             color: var(--secondary-color);
-            padding: 1rem 2rem; 
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: fixed;
             top: 0;
-            width: 100%; 
-            box-sizing: border-box; 
-            margin-left: 0; 
+            width: 100%;
+            box-sizing: border-box;
             z-index: 1000;
             border-bottom: 1px solid var(--border-color);
         }
@@ -68,11 +67,16 @@
             color: var(--secondary-color);
         }
 
+        .navbar .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
         .navbar a {
             color: var(--secondary-color);
             text-decoration: none;
             font-size: 1.2rem;
-            margin: 0 1rem;
             transition: color var(--transition);
             position: relative;
         }
@@ -81,73 +85,26 @@
             color: var(--primary-color);
         }
 
-        .navbar a::after {
-            content: '';
-            display: block;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            transition: width var(--transition);
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-        }
-
-        .navbar a:hover::after {
-            width: 100%;
-        }
-
         .header {
             background: url('Task 2/Header Backdrop.jpg') no-repeat center center/cover;
             color: #fff;
             text-align: center;
             padding: 4rem 2rem;
+            margin-top: 5rem; /* Adjusted for fixed navbar */
             position: relative;
             z-index: 1;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: -1;
         }
 
         .header h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .section {
-            padding: 5rem 2rem;
-            text-align: center;
-            background: var(--header-background);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .section h2 {
-            color: var(--primary-color);
             font-size: 2.5rem;
             margin-bottom: 1rem;
         }
 
-        .section p {
-            max-width: 800px;
-            margin: 0 auto;
-            font-size: 1.2rem;
-            line-height: 1.6;
-        }
-
         .container {
-            width: 80%;
+            width: 90%;
             max-width: 800px;
             margin: 0 auto;
-            background: var(--background-color);
+            background: var(--header-background);
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 2px 10px var(--shadow-color);
@@ -187,12 +144,12 @@
 
         #show {
             margin-top: 2rem;
-            background-color: #5db2cc; 
-            color: #000000; 
+            background-color: #5db2cc;
+            color: #000000;
             padding: 1rem;
             border-radius: 10px;
             box-shadow: 0 2px 10px var(--shadow-color);
-            display: inline-block; 
+            display: inline-block;
         }
 
         #show img {
@@ -200,18 +157,33 @@
             margin-top: 1rem;
         }
 
-        .footer {
+        .section {
+            padding: 5rem 2rem;
+            text-align: center;
             background: var(--header-background);
-            color: var(--secondary-color);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+
+        .footer {
+            background: var(--secondary-color);
+            color: #fff;
             text-align: center;
             padding: 1rem;
-            position: relative;
-            bottom: 0;
-            width: 100%;
             margin-top: auto;
             border-top: 1px solid var(--border-color);
-            background-color: black;
-            color: white;
         }
 
         .footer p {
@@ -219,9 +191,9 @@
         }
 
         .social-icons img {
-            width: 24px; 
+            width: 24px;
             height: 24px;
-            margin: 0 0.5rem; 
+            margin: 0 0.5rem;
             vertical-align: middle;
         }
 
@@ -232,53 +204,37 @@
             }
 
             .navbar .nav-links {
-                display: flex;
                 flex-direction: column;
                 align-items: center;
                 margin-top: 1rem;
+                gap: 0.5rem;
             }
 
             .navbar .nav-links a {
-                margin: 0.5rem 0;
                 font-size: 1rem;
+            }
+
+            .header {
+                margin-top: 7rem;
+                padding: 2rem;
             }
 
             .header h1 {
-                font-size: 2.5rem;
-            }
-
-            .section h2 {
                 font-size: 2rem;
             }
 
-            .section p {
-                font-size: 1rem;
-            }
-
             .search_box button {
-                margin-top: 1rem;
                 margin-left: 0;
                 width: 100%;
-                max-width: 400px;
+                margin-top: 1rem;
             }
 
-            .search_box input {
-                width: 100%;
-                margin-bottom: 1rem;
-            }
-
-            .container {
-                width: 90%;
-                padding: 1rem;
-            }
-
-            #show {
-                width: 100%;
-                padding: 1rem;
+            .section {
+                padding: 3rem 1rem;
             }
 
             .footer {
-                padding: 0.5rem;
+                padding: 1rem;
             }
 
             .social-icons img {
@@ -292,7 +248,7 @@
 <body>
     <div class="navbar">
         <div class="logo">
-            <img src="Task 2/logo.jpg" alt="Logo"> 
+            <img src="Task 2/logo.jpg" alt="Logo">
             <h1>Weather App</h1>
         </div>
         <div class="nav-links">
@@ -303,11 +259,11 @@
     </div>
 
     <header class="header" id="home">
-        <h1>Check Weather Of Any Location !</h1>
+        <h1>Check Weather Of Any Location!</h1>
         <div class="container">
             <div class="search_box">
                 <input type="text" placeholder="Enter a city name" id="city" autocomplete="off" />
-                <button id="search"><i class="fas fa-search"></i></button> 
+                <button id="search"><i class="fas fa-search"></i></button>
             </div>
             <div id="show"></div>
         </div>
@@ -315,7 +271,7 @@
 
     <section class="section" id="about">
         <h2>About Us</h2>
-        <img src="Task 2/About Us.png" alt="About Us Image"> 
+        <img src="Task 2/About Us.png" alt="About Us Image">
         <p>
             Welcome to our Weather App! Our mission is to provide you with reliable and up-to-date weather information to make your life easier. With our user-friendly interface, you can get the latest weather updates quickly and accurately. We utilize advanced weather data sources to ensure you receive the best possible information. Whether you're planning a trip or just need to check the daily forecast, our app is here to help. Stay prepared and enjoy peace of mind with our comprehensive weather services.
         </p>
@@ -326,10 +282,10 @@
         <img src="Task 2/Contact Us.png" alt="Contact Us Image">
         <p>If you have any questions, feel free to reach out to us. We'd love to hear from you!</p>
         <div class="social-icons">
-            <a href="#"><img src="Task 2/facebook.png" alt="Facebook"></a> 
-            <a href="#"><img src="Task 2/twitter.png" alt="Twitter"></a> 
-            <a href="#"><img src="Task 2/linkedin.png" alt="LinkedIn"></a> 
-            <a href="#"><img src="Task 2/github.png" alt="GitHub"></a> 
+            <a href="#"><img src="Task 2/facebook.png" alt="Facebook"></a>
+            <a href="#"><img src="Task 2/twitter.png" alt="Twitter"></a>
+            <a href="#"><img src="Task 2/linkedin.png" alt="LinkedIn"></a>
+            <a href="#"><img src="Task 2/github.png" alt="GitHub"></a>
         </div>
     </section>
 
