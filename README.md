@@ -1,6 +1,6 @@
 
 
-# Bharat Intern Virtual Internship - Project Repository
+# 30 Days Of Coding - Project Repository
 
 Welcome to my GitHub repository for the Virtual Internship Program at **Bharat Intern**! This repository contains the projects I have completed as part of my internship tasks. Below, you'll find an overview of each task, along with the technologies used and instructions for running the projects.
 
